@@ -33,6 +33,11 @@ class DataHandler
             $cacheTagsToFlush = [];
             if (isset($params['uid'])) {
                 $cacheTagsToFlush[] = 'tx_news_uid_' . $params['uid'];
+            
+                $newsRecord = BackendUtilityCore::getRecord($params['table'], $params['uid']);
+                if (isset($newsRecord['l10n_parent']) && $newsRecord['l10n_parent'] > 0) {
+                    $cacheTagsToFlush[] = 'tx_news_uid_' . $newsRecord['l10n_parent'];
+                }
             }
             if (isset($params['uid_page'])) {
                 $cacheTagsToFlush[] = 'tx_news_pid_' . $params['uid_page'];
